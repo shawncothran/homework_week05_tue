@@ -1,0 +1,98 @@
+@import '../bower_components/normalize-css/normalize';
+@import '../bower_components/bourbon/app/assets/stylesheets/bourbon';
+@import '../bower_components/neat/app/assets/stylesheets/neat';
+
+@mixin vertical-align($position: relative) {
+  position: $position;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+  background: #000 url(../assets/background.png);
+  font-family: 'Press Start 2P', cursive;
+}
+
+main {
+  @include outer-container(800px);
+  @include vertical-align();
+  height: 600px;
+  font-size: 22px;
+  border: none;
+  border-radius: 80px;
+  background: #0c2846;
+}
+
+.menuScreen {
+  a {
+    display: inline-block;
+    margin-top: 36px;
+    text-align: center;
+    font-size: 67px;
+  }
+}
+
+object {
+  position: fixed;
+  margin-top: 80px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+table {
+  margin: 0 auto;
+  text-align: center;
+  font-size: 34px;
+}
+
+table, th, td {
+    border: 8px solid #003BB4;
+}
+
+th, td {
+    padding: 16px;
+}
+
+nav {
+  @include span-columns(12);
+  padding: 32px;
+  text-align: center;
+}
+
+a {
+  padding: 8px;
+  color: #003BB4;
+  text-decoration: none;
+  &:hover {
+    color: #1651DC;
+  }
+}
+
+.settings {
+  @include span-columns(12);
+  margin-top: 36px;
+  text-align: center;
+  font-size: 67px;
+}
+
+button {
+  padding: 8px;
+  margin-top: 36px;
+  text-align: center;
+  background: none;
+  border: 8px solid #003BB4;
+  &:hover {
+    border: 8px solid #1651DC;
+  }
+}

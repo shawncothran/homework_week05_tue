@@ -15,6 +15,7 @@ var GameRouter = Backbone.Router.extend({
   play: function(content) {
 
     $('.content').html('<canvas id="screen" width="800" height="515">');
+    new Game("screen");
   },
 
   leaderboard: function() {

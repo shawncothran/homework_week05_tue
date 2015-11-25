@@ -14,7 +14,7 @@ var GameRouter = Backbone.Router.extend({
 
   play: function(content) {
 
-    $('.content').html('<object width="616" height="520"><param name="movie" value="http://www.pizn.com/swf/1-space-invaders.swf"><param name="quality" value="high"><embed src="http://www.pizn.com/swf/1-space-invaders.swf" quality="high" type="application/x-shockwave-flash"></embed></object>');
+    $('.content').html('<canvas id="screen" width="800" height="515">');
   },
 
   leaderboard: function() {

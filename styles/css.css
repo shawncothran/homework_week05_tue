@@ -450,3 +450,6 @@ button {
   border: 8px solid #003BB4; }
   button:hover {
     border: 8px solid #1651DC; }
+
+#screen {
+  margin: 0 auto; }

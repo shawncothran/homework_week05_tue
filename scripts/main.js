@@ -14,8 +14,8 @@ var GameRouter = Backbone.Router.extend({
 
   play: function(content) {
 
-    $('.content').html('<canvas id="screen" width="800" height="515">');
-    new Game("screen");
+    $('.content').html('<canvas id="ctx" width="800" height="515">Your browser does not support the HTML5 <canvas> element. Please upgrade your browser.</canvas>');
+    new Game("ctx");
   },
 
   leaderboard: function() {

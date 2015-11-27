@@ -1,7 +1,6 @@
 var Game = function(canvasId) {
   var canvas = document.getElementById(canvasId);
-  var screen = canvas.getContext('2d');
-  screen.fillStyle="#1651DC";
+  var ctx = canvas.getContext('2d');
   this.gameSize = { x: canvas.width, y: canvas.height };
 
   this.bodies = createInvaders(this).concat(new Player(this, this.gameSize));
@@ -11,7 +10,7 @@ var Game = function(canvasId) {
     self.shootSound = shootSound;
     var tick = function() {
       self.update();
-      self.draw(screen, self.gameSize);
+      self.draw(ctx, self.gameSize);
       requestAnimationFrame(tick);
     };
 
@@ -36,21 +35,24 @@ Game.prototype = {
 
     for (var i = 0; i < this.bodies.length; i++) {
       this.bodies[i].update();
+      // TODO: FIX THIS!!
+      // if (this.bodies.indexOf(Player) === 0) {
+      //   alert('YOU WIN!')
+      // }
+      // if (this.bodies.indexOf(Player) === -1) {
+      //   alert('YOU LOSE!')
+      // }
     }
   },
 
-  draw: function(screen, gameSize) {
-    screen.clearRect(0, 0, gameSize.x, gameSize.y);
+  draw: function(ctx, gameSize) {
+    ctx.clearRect(0, 0, gameSize.x, gameSize.y);
     for (var i = 0; i < this.bodies.length; i++) {
-      drawRect(screen, this.bodies[i])
+      drawRect(ctx, this.bodies[i])
     }
   },
 
   addBody: function(body) {
-    this.bodies.push(body);
-  },
-
-  destroyBody: function(body) {
     this.bodies.push(body);
   },
 
@@ -65,7 +67,7 @@ Game.prototype = {
 
 var Player = function(game, gameSize) {
   this.game = game;
-  this.size = {x: 15, y: 15};
+  this.size = {x: 16, y: 16};
   this.center = { x: gameSize.x / 2, y: gameSize.y -this.size.x };
   this.keyboarder = new Keyboarder();
   this.firedFlag = false;
@@ -90,23 +92,22 @@ Player.prototype = {
     if (this.keyboarder.isUp(this.keyboarder.KEYS.SPACE)) {
       this.firedFlag = false;
     }
-
   }
 };
 
 var Invader = function(game, center) {
   this.game = game;
-  this.size = {x: 15, y: 15};
+  this.size = {x: 16, y: 16};
   this.center = center;
   this.patrolX = 0;
-  this.speedX = 1.2;
+  this.speedX = 1.3;
 };
 
 Invader.prototype = {
   update: function() {
-    if (this.patrolX < 0 || this.patrolX > 485) {
-      this.speedX = -this.speedX;
-      this.center.y +=15;
+    if (this.patrolX < 0 || this.patrolX > 432) {
+      this.speedX = -(this.speedX * 1.03);
+      this.center.y +=16;
     }
 
     this.center.x += this.speedX;
@@ -114,7 +115,7 @@ Invader.prototype = {
 
     if (Math.random() > 0.993 && !this.game.invadersBelow(this)) {
       var bullet = new Bullet({ x: this.center.x, y: this.center.y + this.size.x / 2},
-                              { x: Math.random() - 0.5, y: 2.5});
+                              { x: Math.random() - 0.4, y: 2.4});
       this.game.addBody(bullet);
     }
   }
@@ -122,10 +123,10 @@ Invader.prototype = {
 
 var createInvaders = function(game) {
   var invaders = [];
-  for (var i = 0; i < 44; i++) {
-    var x = 0 + (i % 11) * 30; // cannot be divisible by
-    var y = 30 + (i % 4) * 30; // this number
-    console.log(x, y);
+  for (var i = 0; i < 60; i++) {
+    var x = 8 + (i % 12) * 32; // i % a cannot be divisible by
+    var y = 8 + (i % 5) * 32; // i % b
+
     invaders.push(new Invader(game, { x: x, y: y }));
   }
   return invaders;
@@ -144,10 +145,11 @@ Bullet.prototype = {
   }
 };
 
-var drawRect = function(screen, body) {
-  screen.fillRect(body.center.x - body.size.x / 2,
+var drawRect = function(ctx, body) {
+  ctx.fillRect(body.center.x - body.size.x / 2,
                   body.center.y - body.size.y / 2,
                   body.size.x, body.size.y);
+  ctx.fillStyle="#1651DC";
 };
 
 var Keyboarder = function() {
